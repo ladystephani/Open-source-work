@@ -8,6 +8,5 @@ const getUserRepos = function(user) {
             console.log(data);
         })
     })
-    console.log("outside");
 };
 getUserRepos("ladystephani");// pass in localStorage value
