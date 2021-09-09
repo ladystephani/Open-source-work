@@ -1,9 +1,13 @@
-const getUserRepos = function () {
-    fetch("https://api.github.com/users/ladystephani/repos").then(function(response) {
+const getUserRepos = function(user) {
+    // Format the URL
+    const apiUrl = "https://api.github.com/users/" + user + "/repos";
+
+    // Request response from API server
+    fetch(apiUrl).then(function(response) {
         response.json().then(function(data) {
             console.log(data);
         })
     })
     console.log("outside");
 };
-getUserRepos();
+getUserRepos("ladystephani");// pass in localStorage value
