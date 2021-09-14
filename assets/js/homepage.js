@@ -4,6 +4,11 @@ const displayRepos = function(repos, user) {
     // console.log(repos)
     // console.log(user)
 
+    // check if API returned repos
+    if (repos.length === 0) {
+        reporContainerEl.textContent = "No repositories found."
+        return;
+    }
     // clear old content every time search is performed
     repoContainerEl.textContent = "";
     userSearchTerm.textContent = user;
@@ -49,12 +54,23 @@ const displayRepos = function(repos, user) {
 const getUserRepos = function(user) {
     // Format the URL
     const apiUrl = "https://api.github.com/users/" + user + "/repos";
+    // save info here temporarily
+    // https://api.openweathermap.org/data/2.5/weather?q=beijing&appid=c70713c6e0ec7c592b8da626a2b4edc5
 
     // Request response from API server
     fetch(apiUrl).then(function(response) {
-        response.json().then(function(data) {
-            displayRepos(data, user);
-        })
+        // case where request was successful
+        if (response.ok) {
+            response.json().then(function(data) {
+                displayRepos(data, user);
+            })
+        } else {
+            alert("Error: user not found");
+        }
+    })
+    // case where network was lost
+    .catch(function(error) {
+        alert("Unable to connect to the network");
     })
 };
 // getUserRepos();// moved to handler function on form submission
